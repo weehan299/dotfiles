@@ -131,4 +131,13 @@ export NVM_DIR="$HOME/.nvm"
 alias checkstyle="java -jar /home/weehan/checkstyle_files/checkstyle-8.2-all.jar -c /home/weehan/checkstyle_files/cs2030_checks.xml *.java"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-alias config='/usr/bin/git --git-dir=/home/weehan/dotfiles/ --work-tree=/home/weehan'
+
+git_branch() {
+      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  }
+
+export PS1="\[\033[38;5;221m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;141m\]\h\[$(tput sgr0)\]\w\[\033[0;32m\] \$(git_branch)\[\033[0m\]\$"
+
+LS_COLORS="ow=01;36;40" && export LS_COLORS
+
+alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'

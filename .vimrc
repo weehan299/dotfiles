@@ -4,10 +4,12 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
-"Plug 'morhetz/gruvbox'
-Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+"Plug 'joshdick/onedark.vim'
+"Plug 'altercation/vim-colors-solarized/'
 " AuTomatically show Vim's complete menu while typing.
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/AutoComplPop'
 
 "Snippets. Ultisnips is engine, vim Snippets is the tool
@@ -16,9 +18,8 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 "languages
 Plug 'vim-python/python-syntax'
 Plug 'pangloss/vim-javascript'
-" For latex
-Plug 'lervag/vimtex'
 call plug#end()
+
 
 
 "Enable 24-bit true colors if your terminal supports it.
@@ -30,13 +31,20 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
+highlight Cursor guifg=white guibg=black
+highlight iCursor guifg=white guibg=steelblue
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
 
 syntax on
+
 "let g:solarized_termcolors=256
 set t_Co=256
 set background=dark
 set t_ut=""
-colorscheme onedark
+colorscheme gruvbox
 
 
 
@@ -44,7 +52,7 @@ colorscheme onedark
 inoremap jk <Esc>
 
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ],
       \ }
@@ -88,6 +96,9 @@ set mouse=a
 "split settings
 set splitbelow
 set splitright
+
+"to off highlight search after searching just press space twice
+nnoremap <Leader><space> :noh<cr>
 
 "quick split
 nnoremap <leader>j <C-W><C-J>
@@ -213,13 +224,13 @@ let g:fzf_tags_command = 'ctags -R'
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-g> :GFiles<CR>
+noremap <silent> <C-o> :Buffers<CR>
+nnoremap <C-o> :Rg!
 
 " Store info from no more than 100 files at a time, 9999 lines of text,
 " 100kb of data. Useful for copying large amounts of data between files.
 set viminfo='100,<9999,s100
-
-
-
-
 
 
