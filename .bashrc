@@ -1,9 +1,12 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-alias 'python'='python3'
-alias 'cls'='clear'
+alias python='python3'
+alias cls='clear'
 alias rm='rm -i'
+
+export TERM="xterm-256color"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -118,35 +121,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# to ensure that gvim will work by oeping a new display window
+export DISPLAY=:0
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+alias checkstyle="java -jar /home/weehan/checkstyle_files/checkstyle-8.2-all.jar -c /home/weehan/checkstyle_files/cs2030_checks.xml *.java"
 
-#export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-#export ANDROID_HOME="/mnt/c/Users/weeha/AppData/Local/Android/sdk"
-#export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools"
-
-
-
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export PATH=$PATH:$JAVA_HOME/bin
-
-export ANDROID_HOME=/home/weehan/Android
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=${PATH}:/Development/android-sdk/platform-tools:/Development/android-sdk/tools
-
-
-git_branch() {
-      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-  }
-
-export PS1="\e[1;33m[\u@\h \W]\$(git_branch)\$\e[m"
-
-
-
-
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 alias config='/usr/bin/git --git-dir=/home/weehan/dotfiles/ --work-tree=/home/weehan'
