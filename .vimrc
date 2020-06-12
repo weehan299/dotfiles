@@ -8,25 +8,21 @@ Plug 'morhetz/gruvbox'
 " AuTomatically show Vim's complete menu while typing.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
-
 "languages
 Plug 'vim-python/python-syntax'
 Plug 'pangloss/vim-javascript'
 call plug#end()
 
-
-
 "Enable 24-bit true colors if your terminal supports it.
 if (has("termguicolors"))
     " https://github.com/vim/vim/issues/993#issuecomment-255651605
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-    set termguicolors
+	set termguicolors
 endif
-
 syntax on
+
 
 "let g:solarized_termcolors=256
 set t_Co=256
@@ -36,8 +32,9 @@ colorscheme gruvbox
 
 
 
-"set jk to escape
+""set jk to escape
 inoremap jk <Esc>
+
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
@@ -60,14 +57,12 @@ set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
 
-
-
 "mapping leader to space
 let mapleader = " "
 
 
 "NERDTree file explorer
-" toggle on off
+toggle on off
 map <leader>n :NERDTreeToggle<CR>
 
 set mouse=a
@@ -103,16 +98,9 @@ noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
 
-" set autocomplete options
-" <C-p> or <C-n> to go up and down the autocomplete list.
-" <C-e> to cancel auto complete
-set complete+=kspell
-set completeopt=menuone,longest
 
-"For less status bar notification for autocomplete
-set shortmess+=c
 
-" Set compatibility to Vim only.
+" " Set compatibility to Vim only.
 set nocompatible
 
 " Helps force plug-ins to load correctly when it is turned back on below.
@@ -197,19 +185,18 @@ let g:fzf_preview_window = 'right:60%'
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options = '--graph --color=always--format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-" [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R'
-" [Commands] --expect expression for directly executing the command
-let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+let g:fzf_commits_log_options = '--graph
+--color=always--format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+ " [Tags] Command to generate tags file
+ let g:fzf_tags_command = 'ctags -R'
+ " [Commands] --expect expression for directly executing the command
+ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <C-g> :GFiles<CR>
-noremap <silent> <C-o> :Buffers<CR>
-nnoremap <C-o> :Rg!
+ nnoremap <silent> <C-p> :Files<CR>
+ nnoremap <silent> <C-g> :GFiles<CR>
+ noremap <silent> <C-o> :Buffers<CR>
+ nnoremap <C-o> :Rg!
 
-" Store info from no more than 100 files at a time, 9999 lines of text,
-" 100kb of data. Useful for copying large amounts of data between files.
-set viminfo='100,<9999,s100
-
-
+ " Store info from no more than 100 files at a time, 9999 lines of text,
+ " 100kb of data. Useful for copying large amounts of data between files.
+ set viminfo='100,<9999,s100
