@@ -5,15 +5,10 @@ Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'morhetz/gruvbox'
-"Plug 'joshdick/onedark.vim'
-"Plug 'altercation/vim-colors-solarized/'
 " AuTomatically show Vim's complete menu while typing.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'vim-scripts/AutoComplPop'
 
-"Snippets. Ultisnips is engine, vim Snippets is the tool
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 "languages
 Plug 'vim-python/python-syntax'
@@ -30,13 +25,6 @@ if (has("termguicolors"))
 
     set termguicolors
 endif
-
-highlight Cursor guifg=white guibg=black
-highlight iCursor guifg=white guibg=steelblue
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
 
 syntax on
 
@@ -70,15 +58,6 @@ let g:syntastic_check_on_wq = 0
 
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
-
-
-"Snippets configuration
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<c-a>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
 
 
 
