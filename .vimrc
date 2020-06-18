@@ -11,7 +11,12 @@ Plug 'junegunn/fzf.vim'
 "languages
 Plug 'vim-python/python-syntax'
 Plug 'pangloss/vim-javascript'
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+"latex
+Plug 'lervag/vimtex'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+
 
 "Enable 24-bit true colors if your terminal supports it.
 if (has("termguicolors"))
@@ -23,6 +28,8 @@ if (has("termguicolors"))
 endif
 syntax on
 
+
+set guifont=Monaco:h10
 
 "let g:solarized_termcolors=256
 set t_Co=256
@@ -62,7 +69,7 @@ let mapleader = " "
 
 
 "NERDTree file explorer
-toggle on off
+"toggle on off
 map <leader>n :NERDTreeToggle<CR>
 
 set mouse=a
@@ -130,7 +137,7 @@ set directory=~/.vim/.swp//
 
 " Uncomment below to set the max textwidth. Use a value corresponding to the
 " width of your screen.
-set textwidth=79
+set textwidth=90
 set formatoptions=tcqrn1
 set tabstop=4
 set shiftwidth=4
@@ -176,6 +183,23 @@ set ignorecase
 " Include only uppercase words with uppercase search term
 set smartcase
 
+"Press * to search for the term under the cursor or a visual selection and
+" then press a key below to replace all instances of it in the current file.
+nnoremap <Leader>r :%s///g<Left><Left>
+nnoremap <Leader>rc :%s///gc<Left><Left><Left>
+
+" The same as above but instead of acting on the whole file it will be
+" restricted to the previously visually selected range. You can do that by
+" pressing *, visually selecting the range you want it to apply to and then
+" press a key below to replace all instances of it in the current selection.
+xnoremap <Leader>r :s///g<Left><Left>
+xnoremap <Leader>rc :s///gc<Left><Left><Left>
+
+" Press * then Type a replacement term and press . to repeat the replacement again. 
+" Useful for replacing a few instances of the term (comparable to multiple cursors).
+nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent> s* "sy:let @/=@s<CR>cgn
+
 
 "FZF stuff: 
 " Empty value to disable preview window altogether
@@ -185,8 +209,7 @@ let g:fzf_preview_window = 'right:60%'
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options = '--graph
---color=always--format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_commits_log_options = '--graph --color=always--format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
  " [Tags] Command to generate tags file
  let g:fzf_tags_command = 'ctags -R'
  " [Commands] --expect expression for directly executing the command
@@ -200,3 +223,7 @@ let g:fzf_commits_log_options = '--graph
  " Store info from no more than 100 files at a time, 9999 lines of text,
  " 100kb of data. Useful for copying large amounts of data between files.
  set viminfo='100,<9999,s100
+
+ let g:vimtex_view_general_viewer = 'sumatraPDF'
+ let g:vimtex_view_general_options = '-reuse-instance @pdf'
+ let g:vimtex_view_general_options_latexmk = '-reuse-instance'
