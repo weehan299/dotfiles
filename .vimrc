@@ -51,7 +51,6 @@ autocmd GUIEnter * set visualbell t_vb=
 "mapping leader to space
 let mapleader = " "
 
-
 "NERDTree file explorer
 "toggle on off
 map <leader>n :NERDTreeToggle<CR>
@@ -60,6 +59,12 @@ set mouse=a
 
 "set 80 character mark
 :set colorcolumn=80
+
+"copy straight to system's keyboard #update this doesnt seem to work..
+set clipboard=unnamed
+
+" copy (write) highlighted text to .vimbuffer
+vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
 
 "split settings
 set splitbelow
@@ -257,6 +262,4 @@ nmap <silent> gr <Plug>(coc-references)
  let g:vimtex_view_general_viewer = 'sumatraPDF'
  let g:vimtex_view_general_options = '-reuse-instance @pdf'
  let g:vimtex_view_general_options_latexmk = '-reuse-instance'
-
-
 
