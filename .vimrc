@@ -1,42 +1,37 @@
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-surround'
 Plug 'morhetz/gruvbox'
+Plug 'tomasr/molokai'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " AuTomatically show Vim's complete menu while typing.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'mhinz/vim-grepper'
+
 "languages
-Plug 'vim-python/python-syntax'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 "latex
 Plug 'lervag/vimtex'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
+ " Store info from no more than 100 files at a time, 9999 lines of text,
+ " 100kb of data. Useful for copying large amounts of data between files.
+ set viminfo='100,<9999,s100
 
-"Enable 24-bit true colors if your terminal supports it.
-if (has("termguicolors"))
-    " https://github.com/vim/vim/issues/993#issuecomment-255651605
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-	set termguicolors
-endif
 syntax on
 
 
-set guifont=Monaco:h10
-
 "let g:solarized_termcolors=256
+let g:rehash256 = 1
 set t_Co=256
 set background=dark
 set t_ut=""
 colorscheme gruvbox
-
 
 
 ""set jk to escape
@@ -50,19 +45,8 @@ let g:lightline = {
       \ }
       \ }
 
-"syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
-
 
 "mapping leader to space
 let mapleader = " "
@@ -73,6 +57,9 @@ let mapleader = " "
 map <leader>n :NERDTreeToggle<CR>
 
 set mouse=a
+
+"set 80 character mark
+:set colorcolumn=80
 
 "split settings
 set splitbelow
@@ -183,6 +170,9 @@ set ignorecase
 " Include only uppercase words with uppercase search term
 set smartcase
 
+" Edit Vim config file in a new tab.
+map <Leader>ev :tabnew $MYVIMRC<CR>
+
 "Press * to search for the term under the cursor or a visual selection and
 " then press a key below to replace all instances of it in the current file.
 nnoremap <Leader>r :%s///g<Left><Left>
@@ -200,6 +190,7 @@ xnoremap <Leader>rc :s///gc<Left><Left><Left>
 nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
 xnoremap <silent> s* "sy:let @/=@s<CR>cgn
 
+"................................................................................
 
 "FZF stuff: 
 " Empty value to disable preview window altogether
@@ -215,15 +206,57 @@ let g:fzf_commits_log_options = '--graph --color=always--format="%C(auto)%h%d %s
  " [Commands] --expect expression for directly executing the command
  let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
+ " Allow passing optional flags into the Rg command.
+"   Example: :Rg myterm -g '*.md'
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \ "rg --column --line-number --no-heading --color=always --smart-case " .
+  \ <q-args>, 1, fzf#vim#with_preview(), <bang>0)
+
+"short cuts to access files
  nnoremap <silent> <C-p> :Files<CR>
+ nnoremap <silent> <C-l> :Lines<CR>
  nnoremap <silent> <C-g> :GFiles<CR>
- noremap <silent> <C-o> :Buffers<CR>
- nnoremap <C-o> :Rg!
+ noremap <silent> <Leader><Enter> :Buffers<CR>
 
- " Store info from no more than 100 files at a time, 9999 lines of text,
- " 100kb of data. Useful for copying large amounts of data between files.
- set viminfo='100,<9999,s100
+"................................................................................
 
+" vim grepper
+
+let g:grepper={}
+let g:grepper.tools=["rg"]
+
+xmap gr <plug>(GrepperOperator)
+
+" After searching for text, press this mapping to do a project wide find and
+" replace. It's similar to <leader>r except this one applies to all matches
+" across all files instead of just the current file.
+nnoremap <Leader>R
+  \ :let @s='\<'.expand('<cword>').'\>'<CR>
+  \ :Grepper -cword -noprompt<CR>
+  \ :cfdo %s/<C-r>s//g \| update
+  \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" The same as above except it works with a visual selection.
+xmap <Leader>R
+    \ "sy
+    \ gvgr
+    \ :cfdo %s/<C-r>s//g \| update
+     \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+"................................................................................
+
+ "Coc stuff goto definitions
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references) 
+
+"................................................................................
+
+ " For preview of latex
  let g:vimtex_view_general_viewer = 'sumatraPDF'
  let g:vimtex_view_general_options = '-reuse-instance @pdf'
  let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+
+
+
