@@ -97,8 +97,6 @@ noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
 
-
-
 " " Set compatibility to Vim only.
 set nocompatible
 
