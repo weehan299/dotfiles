@@ -149,3 +149,6 @@ export PS1="\[\033[38;5;221m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;141
 LS_COLORS="ow=01;36;40" && export LS_COLORS
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+eval `ssh-agent`
+ssh-add ~/.ssh/id_rsa_github

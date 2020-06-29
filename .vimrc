@@ -17,6 +17,7 @@ Plug 'mxw/vim-jsx'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 "latex
 Plug 'lervag/vimtex'
+Plug 'reedes/vim-pencil'
 call plug#end()
 
  " Store info from no more than 100 files at a time, 9999 lines of text,
@@ -56,9 +57,6 @@ let mapleader = " "
 map <leader>n :NERDTreeToggle<CR>
 
 set mouse=a
-
-"set 80 character mark
-:set colorcolumn=80
 
 "copy straight to system's keyboard #update this doesnt seem to work..
 set clipboard=unnamed
@@ -111,9 +109,9 @@ filetype plugin indent on
 
 " Turn off modelines
 set modelines=0
-
+                                                                                                   
 " Automatically wrap text that extends beyond the screen length.
-set wrap
+set wrap linebreak
 " Vim's auto indentation feature does not work properly with text copied
 " from outisde of Vim. Press the <F2> key to toggle paste mode on/off.
 nnoremap ` :set invpaste paste?<CR>
@@ -125,9 +123,16 @@ set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
 
+"set 80 character mark
+set colorcolumn=90
+
 " Uncomment below to set the max textwidth. Use a value corresponding to the
 " width of your screen.
 set textwidth=90
+
+" change uncomment this when working with text options
+setlocal formatoptions=ant
+
 set formatoptions=tcqrn1
 set tabstop=4
 set shiftwidth=4
@@ -260,4 +265,15 @@ nmap <silent> gr <Plug>(coc-references)
  let g:vimtex_view_general_viewer = 'sumatraPDF'
  let g:vimtex_view_general_options = '-reuse-instance @pdf'
  let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+
+
+ "...................................................................................
+let g:pencil#autoformat = 1      " 0=disable, 1=enable (def)
+
+augroup pencil
+  autocmd!
+  autocmd FileType markdown call pencil#init({'wrap': 'hard', 'autoformat': 1})
+  autocmd FileType text     call pencil#init({'wrap': 'hard', 'autoformat': 0})
+augroup END
+
 
